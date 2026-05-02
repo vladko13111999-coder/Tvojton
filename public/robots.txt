@@ -1,4 +1,14 @@
+# tvojton.online - robots.txt
 User-agent: *
 Allow: /
 
+# Sitemap
 Sitemap: https://tvojton.online/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1

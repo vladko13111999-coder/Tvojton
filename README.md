@@ -1,16 +1,55 @@
-# React + Vite
+# TvojKlip - Video to Short Clips
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Jednoduchý nástroj na premenu dlhých videí na krátke virálne klipy pre TikTok, YouTube Shorts a Instagram Reels.
 
-Currently, two official plugins are available:
+## 🌟 Funkcie
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 📤 **Video upload** - Potiahni a pusti alebo YouTube URL
+- ⚡ **Auto klipy** - Automatický výber najlepších momentov
+- ✂️ **Manuálny strih** - Vytvor si vlastné klipy
+- 📱 **Všetky formáty** - TikTok (9:16), YouTube (16:9), Instagram (1:1)
+- 💎 **Rýchly export** - HD alebo 4K kvalita
+- 🚀 **Jednoduché** - Žiadne AI, žiadne API, jednoduché použitie
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework:** Next.js 14
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Animations:** Framer Motion
+- **Video:** FFmpeg
+- **Deployment:** Vercel
 
-## Expanding the ESLint configuration
+## 🚀 Quick Start
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# Install dependencies
+npm install
+
+# Run development
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production
+npm start
+```
+
+## 📦 Pricing
+
+| Plan | Cena | Klipy | Kvalita |
+|------|------|-------|---------|
+| Free | 0€ | 3/mes | HD |
+| Basic | 9,99€ | 20/mes | Full HD |
+| Pro | 19,99€ | Neobm. | 4K |
+
+## 📄 License
+
+© 2024 tvojton.online
+
+## 🔗 Links
+
+- [Web](https://tvojton.online)
+- [Blog](https://tvojton.online/blog)
+- [Cenník](https://tvojton.online/cennik)
