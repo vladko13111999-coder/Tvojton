@@ -116,10 +116,10 @@ export default function AppPage() {
     alert(`Klip ${formatTime(clip.start)} - ${formatTime(clip.end)} bol exportovaný!`)
   }
 
-  const handleYoutubeSubmit = () => {
+  const handleYoutubeSubmit = async () => {
     // Extract video ID from YouTube URL
     const patterns = [
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
       /^([a-zA-Z0-9_-]{11})$/
     ]
     
@@ -133,9 +133,18 @@ export default function AppPage() {
     }
     
     if (videoId) {
-      alert(`YouTube video ID: ${videoId} - Táto funkcia je v prémium verzii.`)
+      // Create YouTube video with embed preview
+      const embedUrl = `https://www.youtube.com/embed/${videoId}`
+      setVideo({
+        id: videoId,
+        file: new File([], `youtube_${videoId}.mp4`),
+        preview: embedUrl,
+        duration: 0, // YouTube embed doesn't give duration directly
+        name: `YouTube: ${videoId}`
+      })
+      setYoutubeUrl('')
     } else {
-      alert('Neplatná YouTube URL')
+      alert('Neplatná YouTube URL. Použite: youtube.com/watch?v=VIDEO_ID')
     }
   }
 
@@ -224,12 +233,21 @@ export default function AppPage() {
               <div className="card">
                 {/* Video Player */}
                 <div className="relative rounded-xl overflow-hidden bg-black aspect-video mb-4">
-                  <video
-                    ref={videoRef}
-                    src={video.preview}
-                    className="w-full h-full object-contain"
-                    controls
-                  />
+                  {video.preview.startsWith('http') && video.preview.includes('youtube') ? (
+                    <iframe
+                      src={video.preview}
+                      className="w-full h-full"
+                      allowFullScreen
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    />
+                  ) : (
+                    <video
+                      ref={videoRef}
+                      src={video.preview}
+                      className="w-full h-full object-contain"
+                      controls
+                    />
+                  )}
                   <canvas ref={canvasRef} className="hidden" />
                 </div>
 
