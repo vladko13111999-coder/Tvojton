@@ -81,8 +81,8 @@ export default function AppPage() {
   const handleAddManualClip = () => {
     const newClip: Clip = {
       id: generateId(),
-      start: 0,
-      end: video ? Math.min(30, video.duration) : 30,
+      start: video ? Math.max(0, (clips.length) * 30) : 0,
+      end: video ? Math.min((clips.length + 1) * 30, video.duration) : 30,
       thumbnail: ''
     }
     setClips([...clips, newClip])
@@ -139,12 +139,14 @@ export default function AppPage() {
         id: videoId,
         file: new File([], `youtube_${videoId}.mp4`),
         preview: embedUrl,
-        duration: 0, // YouTube embed doesn't give duration directly
+        duration: 180, // Default 3 min for YouTube
         name: `YouTube: ${videoId}`
       })
+      // Auto generate default clips for YouTube
+      generateAutoClips(180)
       setYoutubeUrl('')
     } else {
-      alert('Neplatná YouTube URL. Použite: youtube.com/watch?v=VIDEO_ID')
+      alert('Neplatná YouTube URL. Použite: youtube.com/watch?v=VIDEO_ID alebo youtu.be/VIDEO_ID')
     }
   }
 
@@ -233,20 +235,25 @@ export default function AppPage() {
               <div className="card">
                 {/* Video Player */}
                 <div className="relative rounded-xl overflow-hidden bg-black aspect-video mb-4">
-                  {video.preview.startsWith('http') && video.preview.includes('youtube') ? (
+                  {video.preview.includes('youtube.com/embed') ? (
                     <iframe
                       src={video.preview}
                       className="w-full h-full"
+                      frameBorder="0"
                       allowFullScreen
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     />
-                  ) : (
+                  ) : video.preview.startsWith('blob:') ? (
                     <video
                       ref={videoRef}
                       src={video.preview}
                       className="w-full h-full object-contain"
                       controls
                     />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-dark-400">
+                      Video preview
+                    </div>
                   )}
                   <canvas ref={canvasRef} className="hidden" />
                 </div>
@@ -256,7 +263,7 @@ export default function AppPage() {
                   <div>
                     <h3 className="font-medium truncate max-w-md">{video.name}</h3>
                     <p className="text-sm text-dark-400">
-                      {formatTime(video.duration)} • {(video.file.size / 1024 / 1024).toFixed(1)} MB
+                      {video.duration > 0 ? formatTime(video.duration) : 'YouTube'} • {(video.file.size / 1024 / 1024).toFixed(1)} MB
                     </p>
                   </div>
                   <button 
